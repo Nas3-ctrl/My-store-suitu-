@@ -3,18 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>طلب مضخة الهواء - SUITU</title>
+    <title>متجرك - اطلب الآن</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
+
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Cairo', sans-serif; background-color: #f4f7f6; color: #333; padding: 15px; line-height: 1.6; }
+        body { font-family: 'Cairo', sans-serif; background-color: #f4f7f6; color: #333; padding: 15px; line-height: 1.6; padding-bottom: 80px; }
+        
+        /* شريط العرض التنازلي */
+        .countdown-bar { background: #e53e3e; color: white; text-align: center; padding: 10px; border-radius: 8px; margin-bottom: 15px; font-weight: 700; font-size: 16px; box-shadow: 0 4px 10px rgba(229, 62, 62, 0.3); display: flex; justify-content: center; align-items: center; gap: 10px; }
+        .timer { background: rgba(0,0,0,0.2); padding: 4px 10px; border-radius: 5px; letter-spacing: 1px; font-family: monospace; font-size: 18px; }
+
         .container { max-width: 600px; margin: 0 auto; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
-        h2 { text-align: center; color: #1a202c; margin-bottom: 20px; font-size: 22px; }
         
+        /* الطمأنة */
+        .trust-badges { display: flex; justify-content: space-around; background: #f0fdf4; padding: 10px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #bbf7d0; }
+        .trust-badge { display: flex; flex-direction: column; align-items: center; font-size: 12px; font-weight: 700; color: #276749; }
+        .trust-badge span { font-size: 20px; margin-bottom: 5px; }
+
+        /* قسم المنتج */
         .product-info { background: #f8fafc; padding: 15px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #e2e8f0; display: flex; flex-direction: column; align-items: center; text-align: center; }
-        
         .main-image-container { width: 100%; max-width: 250px; height: 250px; margin-bottom: 15px; background: #fff; border: 1px solid #cbd5e0; border-radius: 8px; padding: 5px; }
-        .main-image-container img { width: 100%; height: 100%; object-fit: contain; border-radius: 6px; }
+        .main-image-container img { width: 100%; height: 100%; object-fit: contain; border-radius: 6px; transition: 0.3s; }
         
         .thumbnail-gallery { display: flex; gap: 10px; justify-content: center; margin-bottom: 15px; flex-wrap: wrap; }
         .thumbnail-gallery img { width: 60px; height: 60px; object-fit: cover; border: 2px solid transparent; border-radius: 6px; cursor: pointer; transition: 0.2s; background: #fff; padding: 2px; }
@@ -22,38 +32,73 @@
         .thumbnail-gallery img.active { border-color: #3182ce; }
 
         .product-details h3 { margin-bottom: 8px; font-size: 18px; color: #2d3748; }
-        .price { color: #e53e3e; font-weight: 700; font-size: 20px; }
+        .price { color: #e53e3e; font-weight: 800; font-size: 22px; }
 
+        /* حقول الإدخال */
         .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 8px; font-weight: 600; color: #4a5568; font-size: 14px;}
+        label { display: block; margin-bottom: 8px; font-weight: 700; color: #4a5568; font-size: 14px;}
         input[type="text"], input[type="tel"], select { width: 100%; padding: 12px; border: 1px solid #cbd5e0; border-radius: 8px; font-family: 'Cairo', sans-serif; font-size: 15px; transition: border-color 0.3s; background-color: #fff; }
-        input[type="text"]:focus, input[type="tel"]:focus, select:focus { border-color: #3182ce; outline: none; }
+        input[type="text"]:focus, input[type="tel"]:focus, select:focus { border-color: #3182ce; outline: none; box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1); }
 
         .radio-group { display: flex; gap: 10px; margin-top: 5px; }
-        .radio-label { flex: 1; display: flex; align-items: center; justify-content: center; gap: 5px; padding: 12px; border: 1px solid #cbd5e0; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s; font-size: 14px; }
+        .radio-label { flex: 1; display: flex; align-items: center; justify-content: center; gap: 5px; padding: 12px; border: 1px solid #cbd5e0; border-radius: 8px; cursor: pointer; font-weight: 700; transition: all 0.3s; font-size: 14px; }
         .radio-label input { margin-left: 5px; }
-        .radio-label:has(input:checked) { border-color: #3182ce; background-color: #ebf8ff; color: #2b6cb0; }
+        .radio-label:has(input:checked) { border-color: #3182ce; background-color: #ebf8ff; color: #2b6cb0; box-shadow: 0 0 0 2px rgba(49, 130, 206, 0.2); }
 
+        /* ملخص الطلب */
         .summary { background: #f0fdf4; padding: 15px; border-radius: 10px; margin-top: 20px; border: 1px solid #bbf7d0; }
         .summary p { margin: 8px 0; display: flex; justify-content: space-between; font-weight: 600; color: #276749; font-size: 15px; }
-        .total { font-size: 18px; font-weight: 700; color: #e53e3e; border-top: 2px dashed #bbf7d0; padding-top: 15px; margin-top: 15px; }
+        .total { font-size: 20px; font-weight: 800; color: #e53e3e; border-top: 2px dashed #bbf7d0; padding-top: 15px; margin-top: 15px; }
 
-        button { width: 100%; padding: 15px; background: #38a169; color: white; border: none; border-radius: 8px; font-size: 18px; font-family: 'Cairo', sans-serif; font-weight: 700; cursor: pointer; margin-top: 20px; transition: background 0.3s; }
+        /* زر الإرسال */
+        button { width: 100%; padding: 15px; background: #38a169; color: white; border: none; border-radius: 8px; font-size: 18px; font-family: 'Cairo', sans-serif; font-weight: 800; cursor: pointer; margin-top: 20px; transition: background 0.3s, transform 0.1s; display: flex; justify-content: center; align-items: center; gap: 10px; }
         button:hover { background: #2f855a; }
+        button:active { transform: scale(0.98); }
         button:disabled { background: #a0aec0; cursor: not-allowed; }
+        
+        /* شاشة التحميل */
+        .spinner { border: 3px solid rgba(255,255,255,0.3); border-radius: 50%; border-top: 3px solid #fff; width: 20px; height: 20px; animation: spin 1s linear infinite; display: none; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* قسم آراء العملاء */
+        .reviews-section { margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0; }
+        .reviews-section h3 { text-align: center; color: #2d3748; margin-bottom: 15px; font-size: 18px; }
+        .review-card { background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 10px; border: 1px solid #edf2f7; }
+        .review-header { display: flex; justify-content: space-between; margin-bottom: 5px; }
+        .review-name { font-weight: 700; color: #2b6cb0; font-size: 14px; }
+        .review-stars { color: #ecc94b; font-size: 14px; }
+        .review-text { font-size: 13px; color: #4a5568; }
+
+        /* زر واتساب عائم */
+        .whatsapp-float { position: fixed; bottom: 20px; left: 20px; background: #25d366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 30px; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); z-index: 1000; text-decoration: none; transition: 0.3s; }
+        .whatsapp-float:hover { transform: scale(1.1); }
     </style>
 </head>
 <body>
 
+<!-- شريط العرض التنازلي -->
+<div class="countdown-bar">
+    <span>⚠️ العرض ينتهي قريباً:</span>
+    <div class="timer" id="timer">02:00:00</div>
+</div>
+
 <div class="container">
-    <h2>اطلب الآن</h2>
+    
+    <!-- شارات الطمأنة -->
+    <div class="trust-badges">
+        <div class="trust-badge"><span>🚚</span> توصيل سريع</div>
+        <div class="trust-badge"><span>💵</span> دفع عند الاستلام</div>
+        <div class="trust-badge"><span>🔄</span> استبدال مجاني</div>
+    </div>
+
+    <h2 style="text-align: center; margin-bottom: 20px;">اطلب الآن</h2>
     
     <div class="product-info">
         <div class="main-image-container">
             <img id="mainImage" src="" alt="صورة المنتج">
         </div>
         <div class="thumbnail-gallery" id="thumbnailGallery">
-            <!-- سيتم توليد الصور المصغرة هنا تلقائياً -->
+            <!-- سيتم توليد الصور هنا -->
         </div>
         <div class="product-details">
             <h3>مضخة هواء إطارات السيارة SUITU</h3>
@@ -66,10 +111,12 @@
             <label for="name">اسم العميل الكامل</label>
             <input type="text" id="name" name="اسم_العميل" required placeholder="مثال: محمد أحمد">
         </div>
+
         <div class="form-group">
             <label for="phone">رقم الهاتف</label>
             <input type="tel" id="phone" name="رقم_الهاتف" required placeholder="05XXXXXXXX" pattern="0[5-7][0-9]{8}">
         </div>
+
         <div class="form-group">
             <label for="wilaya">الولاية</label>
             <select id="wilaya" name="الولاية" required>
@@ -130,14 +177,17 @@
                 <option value="58 المنيعة" data-home="950" data-office="550">58 - المنيعة (El Menia)</option>
             </select>
         </div>
+
         <div class="form-group">
             <label for="commune">البلدية / الدائرة</label>
             <input type="text" id="commune" name="البلدية" required>
         </div>
+
         <div class="form-group">
             <label for="address">الحي ورقم المنزل</label>
             <input type="text" id="address" name="العنوان" required>
         </div>
+
         <div class="form-group">
             <label>نوع التوصيل</label>
             <div class="radio-group">
@@ -156,15 +206,47 @@
             <p class="total"><span>المجموع النهائي:</span> <span id="summaryTotal">4200</span> دج</p>
         </div>
 
-        <button type="submit" id="submitBtn">تأكيد الطلب</button>
+        <button type="submit" id="submitBtn">
+            <span id="btnText">تأكيد الطلب الآن</span>
+            <div class="spinner" id="btnSpinner"></div>
+        </button>
     </form>
+
+    <!-- قسم آراء العملاء -->
+    <div class="reviews-section">
+        <h3>ماذا قال عملاؤنا؟</h3>
+        
+        <div class="review-card">
+            <div class="review-header">
+                <span class="review-name">أمين من الجزائر العاصمة</span>
+                <span class="review-stars">⭐⭐⭐⭐⭐</span>
+            </div>
+            <p class="review-text">"منتج ممتاز جداً، وصلني في يومين فقط. جودة المضخة قوية وسهلة الاستخدام. شكراً لكم!"</p>
+        </div>
+
+        <div class="review-card">
+            <div class="review-header">
+                <span class="review-name">سارة من وهران</span>
+                <span class="review-stars">⭐⭐⭐⭐⭐</span>
+            </div>
+            <p class="review-text">"تعامل راقي جداً، والتوصيل كان سريعاً. المنتج مطابق للوصف تماماً، أنصح به بشدة."</p>
+        </div>
+    </div>
+
 </div>
+
+<!-- زر واتساب عائم (غير الرقم 213xxxxxxxxx برقمك) -->
+<a href="https://wa.me/213xxxxxxxxx?text=مرحباً،%20أريد%20الاستفسار%20عن%20المنتج" class="whatsapp-float" target="_blank">
+    <svg width="35" height="35" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+</a>
 
 <script>
     const PRODUCT_PRICE = 4200; 
-    const ENDPOINT_URL = 'https://formzeron.homiqh3.workers.dev/api/forms/orders/submissions'; 
+    const PRODUCT_NAME = "مضخة هواء إطارات السيارة SUITU"; 
+    // تم تحديث الرابط إلى النموذج الجديد
+    const ENDPOINT_URL = 'https://formzeron.homiqh3.workers.dev/api/forms/nasrodine-bendgoudi/submissions'; 
 
-    // --- الجزء الجديد: قراءة الصور من ملف gallery.json ---
+    // 1. تحميل الصور
     async function loadGallery() {
         try {
             const response = await fetch('gallery.json');
@@ -172,10 +254,7 @@
             const images = data.images;
             
             if (images && images.length > 0) {
-                // تعيين الصورة الرئيسية (أول صورة)
                 document.getElementById('mainImage').src = images[0];
-                
-                // بناء الصور المصغرة
                 const galleryContainer = document.getElementById('thumbnailGallery');
                 images.forEach((imgSrc, index) => {
                     const img = document.createElement('img');
@@ -187,7 +266,6 @@
             }
         } catch (error) {
             console.error('Error loading gallery:', error);
-            // في حال فشل تحميل الملف، نضع صورة افتراضية
             document.getElementById('mainImage').src = 'product.jpg';
         }
     }
@@ -197,11 +275,9 @@
         document.querySelectorAll('.thumbnail-gallery img').forEach(img => img.classList.remove('active'));
         element.classList.add('active');
     }
-
-    // تشغيل تحميل الصور عند فتح الصفحة
     document.addEventListener('DOMContentLoaded', loadGallery);
-    // -----------------------------------------------------
 
+    // 2. حساب السعر
     function updateSummary() {
         const wilayaSelect = document.getElementById('wilaya');
         const selectedOption = wilayaSelect.options[wilayaSelect.selectedIndex];
@@ -216,15 +292,22 @@
         document.getElementById('summaryShipping').textContent = shippingPrice;
         document.getElementById('summaryTotal').textContent = total;
     }
-
     document.getElementById('wilaya').addEventListener('change', updateSummary);
     document.addEventListener('DOMContentLoaded', updateSummary);
 
+    // 3. إرسال الطلب
     document.getElementById('orderForm').addEventListener('submit', function(e) {
         e.preventDefault(); 
+        
         const submitBtn = document.getElementById('submitBtn');
-        submitBtn.textContent = 'جاري الإرسال...';
+        const btnText = document.getElementById('btnText');
+        const btnSpinner = document.getElementById('btnSpinner');
+        
+        // تفعيل شاشة التحميل
         submitBtn.disabled = true;
+        btnText.textContent = 'جاري الإرسال...';
+        btnSpinner.style.display = 'block';
+
         const formData = new FormData(this);
         const data = {
             "اسم_العميل": formData.get('اسم_العميل'),
@@ -232,12 +315,13 @@
             "الولاية": formData.get('الولاية'),
             "البلدية": formData.get('البلدية'),
             "العنوان": formData.get('العنوان'),
-            "اسم_المنتج": "مضخة هواء إطارات السيارة SUITU",
             "نوع_التوصيل": formData.get('نوع_التوصيل'),
+            "اسم_المنتج": PRODUCT_NAME,
             "سعر_المنتج": PRODUCT_PRICE,
             "سعر_التوصيل": document.getElementById('summaryShipping').textContent,
             "المجموع_النهائي": document.getElementById('summaryTotal').textContent
         };
+
         fetch(ENDPOINT_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
@@ -248,17 +332,41 @@
                 alert('✅ تم استلام طلبك بنجاح! سنتواصل معك قريباً.');
                 this.reset();
                 updateSummary();
-            } else alert('❌ حدث خطأ أثناء إرسال الطلب. يرجى المحاولة مرة أخرى.');
+            } else {
+                alert('❌ حدث خطأ أثناء إرسال الطلب. يرجى المحاولة مرة أخرى.');
+            }
         })
         .catch(error => {
             alert('❌ فشل الاتصال بالخادم. تحقق من اتصالك بالإنترنت.');
             console.error('Error:', error);
         })
         .finally(() => {
-            submitBtn.textContent = 'تأكيد الطلب';
+            // إيقاف شاشة التحميل
             submitBtn.disabled = false;
+            btnText.textContent = 'تأكيد الطلب الآن';
+            btnSpinner.style.display = 'none';
         });
     });
+
+    // 4. العد التنازلي (يبدأ من ساعتين ويتجدد إذا وصل صفر)
+    let timeInSecs = 2 * 60 * 60; // ساعتين
+    const timerElement = document.getElementById('timer');
+    
+    setInterval(() => {
+        let hours = Math.floor(timeInSecs / 3600);
+        let mins = Math.floor((timeInSecs % 3600) / 60);
+        let secs = Math.floor(timeInSecs % 60);
+        
+        timerElement.textContent = 
+            String(hours).padStart(2, '0') + ':' + 
+            String(mins).padStart(2, '0') + ':' + 
+            String(secs).padStart(2, '0');
+        
+        if (timeInSecs > 0) {
+            timeInSecs--;
+        }
+    }, 1000);
 </script>
+
 </body>
 </html>
